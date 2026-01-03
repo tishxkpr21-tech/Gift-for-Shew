@@ -1,0 +1,1199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tisha & Shar 💗</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #FFE4E1 0%, #FFF0F5 100%);
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            min-height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            padding: 20px;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .slide.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        h1, h2, h3 {
+            color: #FF1493;
+            text-align: center;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(255, 105, 180, 0.3);
+        }
+
+        button {
+            padding: 15px 30px;
+            font-size: 16px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #FF69B4, #FF1493);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.4);
+            margin: 10px;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 105, 180, 0.6);
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        input {
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #FF69B4;
+            border-radius: 15px;
+            margin: 10px;
+            text-align: center;
+            background: white;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: #FF1493;
+        }
+
+        .canvas-area {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            margin: 20px 0;
+            cursor: crosshair;
+        }
+
+        .progress-bar {
+            width: 300px;
+            height: 30px;
+            background: #FFE4E1;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+            border: 2px solid #FF69B4;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #FF69B4, #FF1493);
+            width: 0%;
+            transition: width 0.3s;
+        }
+
+        .message-box {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 600px;
+            box-shadow: 0 8px 30px rgba(255, 105, 180, 0.3);
+            text-align: center;
+            line-height: 1.8;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .letter-text {
+            max-height: 400px;
+            overflow-y: auto;
+            text-align: center;
+            line-height: 1.8;
+            color: #FF1493;
+            font-weight: bold;
+            padding: 20px;
+        }
+
+        .grid {
+            display: grid;
+            gap: 10px;
+            margin: 20px 0;
+        }
+
+        .grid-3x3 {
+            grid-template-columns: repeat(3, 100px);
+        }
+
+        .grid-2x3 {
+            grid-template-columns: repeat(3, 80px);
+        }
+
+        .card {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #EDBEFA, #FFC0CB);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .card:hover {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .firework {
+            position: fixed;
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: firework 1s ease-out forwards;
+        }
+
+        @keyframes firework {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--x), var(--y)); opacity: 0; }
+        }
+
+        .emoji-rain {
+            position: fixed;
+            top: -50px;
+            animation: rain 5s linear infinite;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        @keyframes rain {
+            to { transform: translateY(100vh); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .pulse {
+            animation: pulse 1s infinite;
+        }
+
+        .shake {
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Slide 0: Start Page -->
+    <div class="slide active" id="slide0">
+        <canvas id="startCanvas" width="600" height="400"></canvas>
+        <button onclick="nextSlide(1)">Click to Start 💌</button>
+    </div>
+
+    <!-- Slide 1: Welcome -->
+    <div class="slide" id="slide1">
+        <div class="message-box">
+            <p style="font-size: 14px; font-weight: bold; color: #FF1493;">
+                I made this gift because my heart was overflowing with everything I feel for you 💖✨<br>
+                and I needed a piece of us you could hold close 🤍🫶<br><br>
+                This past year with you has been life-changing 🌸🥺 and so deeply beautiful 💫<br><br>
+                You became my comfort on difficult days 🤗💞 my calm in chaos 🌈<br>
+                and my happiest place without even trying 🏡❤️<br><br>
+                Loving you taught me patience, softness, and what it truly means<br>
+                to feel safe with someone 💫🤍<br><br>
+                Thank you for loving me so gently 🥹💕 for standing by me 🫂<br>
+                and for choosing us every single day 💍❤️<br><br>
+                I choose you — in every lifetime, again and again ♾️💖<br><br>
+                P.S. The password is our anniversary date 📅❤️<br>
+                because us will always be the key 🔐💞
+            </p>
+        </div>
+        <button onclick="nextSlide(2)" style="margin-top: 20px;">Click to Begin 💌</button>
+    </div>
+
+    <!-- Slide 2: Login -->
+    <div class="slide" id="slide2">
+        <h2>Enter Your Name</h2>
+        <input type="text" id="nameInput" placeholder="Your name...">
+        <h2>Enter Password</h2>
+        <input type="password" id="passwordInput" placeholder="Anniversary date...">
+        <p id="errorMsg" style="color: red; font-weight: bold;"></p>
+        <button onclick="checkLogin()">Login</button>
+    </div>
+
+    <!-- Slide 3: Fake Breakup -->
+    <div class="slide" id="slide3">
+        <h2>Hello <span id="userName"></span>, make your choice 💗</h2>
+        <button onclick="breakUp()">Break Up ❌</button>
+        <button onclick="stayTogether()">Stay Together ❤️</button>
+        <p id="choiceResult" style="font-size: 18px; font-weight: bold; margin-top: 20px;"></p>
+        <button id="nextAfterChoice" style="display: none;" onclick="nextSlide(4)">Next</button>
+    </div>
+
+    <!-- Slide 4: Intro -->
+    <div class="slide" id="slide4">
+        <h1>SOOOOOO BIBII...💕</h1>
+        <h2>Ready to test your cuteness? 😌</h2>
+        <button onclick="nextSlide(5)">Start 💗</button>
+    </div>
+
+    <!-- Slide 5: Enter Cutie Name -->
+    <div class="slide" id="slide5">
+        <h2>Enter your cutie name 💕</h2>
+        <input type="text" id="cutieNameInput" placeholder="Your cutie name...">
+        <button id="cutenessBtn" style="display: none;" onclick="nextSlide(6)">Check Cuteness 😍</button>
+    </div>
+
+    <!-- Slide 6: Cuteness Meter -->
+    <div class="slide" id="slide6">
+        <h2>Measuring <span id="cutieName"></span>'s cuteness 💗</h2>
+        <h1 id="percentDisplay">0%</h1>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+        <p id="statusText">Scanning...</p>
+        <button id="afterCutenessBtn" style="display: none;" onclick="nextSlide(7)">Next 💕</button>
+    </div>
+
+    <!-- Slide 7: Scale Broken -->
+    <div class="slide" id="slide7">
+        <h1><span id="scaleNameDisplay"></span>, YOU BROKE THE SCALE!!😭💗</h1>
+        <button onclick="nextSlide(8)">Next 💕</button>
+    </div>
+
+    <!-- Slide 8: Tease -->
+    <div class="slide" id="slide8">
+        <h2>Okay <span id="teaseName"></span>… my sweetie lemme show you something 💗</h2>
+        <button onclick="nextSlide(9)">Next</button>
+    </div>
+
+    <!-- Slide 9: Love Letter -->
+    <div class="slide" id="slide9">
+        <div class="message-box" style="max-width: 700px;">
+            <h2>💌</h2>
+            <h3>A letter for you, <span id="letterName"></span> 💗</h3>
+            <button id="openLetterBtn" onclick="openLetter()">Open 💌</button>
+            <div id="letterContent" class="letter-text" style="display: none;">
+                <p style="font-size: 16px; font-weight: bold;">My Dearest <span id="letterName2"></span>,</p><br>
+                <p>My Love ❤️<br>Happy 1st Anniversary, baby! 🥰</p><br>
+                <p>I still remember the first time I saw you on Discord… something in my heart told me, he's going to be someone really special. And I was right. From that day till now, my love for you has only grown and grown. 💖</p><br>
+                <p>I remember when you left my server, and I asked you to come back… I knew then that I couldn't let you go, because my heart had already chosen you. Proposing to you that day was one of the happiest moments of my life. 🥺✨</p><br>
+                <p>This past year with you has been the most beautiful year of my life. You became my safe place, my happiness, my comfort, and my favorite person to laugh with. Even when we fight or have tough days, my love for you never goes away—it just grows stronger. ❤️</p><br>
+                <p>I can't imagine my life without you. You make every day brighter just by being in it. Thank you for loving me so gently, for being patient with me, and for making me feel so special every single day. 🥹💞</p><br>
+                <p>I love you more than words can ever say, and I will keep loving you forever and ever. You're my everything. 🌹<br>Forever yours,<br>Tisha 💖</p>
+            </div>
+            <button id="afterLetterBtn" style="display: none;" onclick="nextSlide(10)">Next 💗</button>
+        </div>
+    </div>
+
+    <!-- Slide 10: Animated Hearts -->
+    <div class="slide" id="slide10">
+        <canvas id="heartsCanvas" width="480" height="400"></canvas>
+        <h1>I LOVE YOU DARLING 💕</h1>
+        <button onclick="nextSlide(11)">Next</button>
+    </div>
+
+    <!-- Slide 11: Heart Quest -->
+    <div class="slide" id="slide11">
+        <h2>Collect all 10 hearts, <span id="questName"></span> ❤️</h2>
+        <h2 id="heartScore">0 / 10 ❤️</h2>
+        <p id="collectMsg" style="font-weight: bold; color: #FF1493;"></p>
+        <canvas id="heartQuestCanvas" width="480" height="350" class="canvas-area"></canvas>
+        <button id="afterHeartsBtn" style="display: none;" onclick="nextSlide(12)">Next</button>
+    </div>
+
+    <!-- Slide 12: Mini Quiz 1 -->
+    <div class="slide" id="slide12">
+        <h2>How well do you know meeee??</h2>
+        <h3 id="quiz1Question"></h3>
+        <input type="text" id="quiz1Answer" placeholder="Your answer...">
+        <button onclick="checkQuiz1()">Submit</button>
+        <p id="quiz1Feedback" style="font-weight: bold; margin-top: 10px;"></p>
+        <button id="nextQuiz1Btn" style="display: none;" onclick="nextSlide(13)">Next ➜ Mini Quiz 2 💌</button>
+    </div>
+
+    <!-- Slide 13: Mini Quiz 2 -->
+    <div class="slide" id="slide13">
+        <h2>Guess my favorite things 💗</h2>
+        <h3 id="quiz2Question"></h3>
+        <input type="text" id="quiz2Answer" placeholder="Your answer...">
+        <button onclick="checkQuiz2()">Submit</button>
+        <p id="quiz2Feedback" style="font-weight: bold; margin-top: 10px;"></p>
+        <button id="nextQuiz2Btn" style="display: none;" onclick="nextSlide(14)">Next ➜ Memory Game 💌</button>
+    </div>
+
+    <!-- Slide 14: Memory Game -->
+    <div class="slide" id="slide14">
+        <h2>Match all the hearts to move forward ❤️</h2>
+        <div class="grid grid-3x3" id="memoryGrid"></div>
+        <p id="memoryMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterMemoryBtn" style="display: none;" onclick="nextSlide(15)">Next 💌</button>
+    </div>
+
+    <!-- Slide 15: Kiss Collector -->
+    <div class="slide" id="slide15">
+        <h2>Collect all kisses 😘</h2>
+        <h2 id="kissScore">0 / 20</h2>
+        <button onclick="collectKiss()" style="font-size: 60px; background: transparent; box-shadow: none;">😘</button>
+        <p id="kissMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterKissBtn" style="display: none;" onclick="nextSlide(16)">Next 💌</button>
+    </div>
+
+    <!-- Slide 16: Click Only If You Love Me -->
+    <div class="slide" id="slide16">
+        <h2>Click ONLY if you love me 💗</h2>
+        <button onclick="iLoveYou()">I LOVE YOU ❤️</button>
+        <p id="loveResponse" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterLoveBtn" style="display: none;" onclick="nextSlide(17)">Next 💌</button>
+    </div>
+
+    <!-- Slide 17: Find My Heart -->
+    <div class="slide" id="slide17">
+        <h2>Find the real heart ❤️</h2>
+        <div class="grid grid-2x3" id="heartFindGrid"></div>
+        <p id="findHeartMsg" style="font-weight: bold; margin-top: 20px;"></p>
+        <button id="afterFindBtn" style="display: none;" onclick="nextSlide(18)">Next 💌</button>
+    </div>
+
+    <!-- Slide 18: Love Unlock -->
+    <div class="slide" id="slide18">
+        <h2>TAP-TAP-TAP<br>Unlock my love 💖</h2>
+        <h1 id="unlockBar" style="min-height: 50px;"></h1>
+        <button onclick="unlockLove()">Unlock 💌</button>
+        <p id="unlockMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterUnlockBtn" style="display: none;" onclick="nextSlide(19)">Next 💌</button>
+    </div>
+
+    <!-- Slide 19: Hold Hands -->
+    <div class="slide" id="slide19">
+        <h2>Click-Click to Hold My Hand 💝</h2>
+        <h1 id="handsDisplay" style="font-size: 60px;">🤍 🤍</h1>
+        <button onclick="holdHands()">Hold 🤍</button>
+        <p id="handsMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterHandsBtn" style="display: none;" onclick="nextSlide(20)">Next 💌</button>
+    </div>
+
+    <!-- Slide 20: Reaction Game -->
+    <div class="slide" id="slide20">
+        <h2>Click the ❤️ as fast as you can!</h2>
+        <h2 id="reactionScore">Score: 0 / 50</h2>
+        <button onclick="reactionClick()" style="font-size: 60px; background: transparent; box-shadow: none;">❤️</button>
+        <p id="reactionMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterReactionBtn" style="display: none;" onclick="nextSlide(21)">Next 💌</button>
+    </div>
+
+    <!-- Slide 21: Hangman -->
+    <div class="slide" id="slide21">
+        <h2>Guess the word: ❤💌🌙</h2>
+        <h1 id="hangmanDisplay" style="letter-spacing: 10px;"></h1>
+        <input type="text" id="hangmanInput" maxlength="1" placeholder="Letter...">
+        <button onclick="guessLetter()">Guess 💭</button>
+        <p id="hangmanMsg" style="font-weight: bold; color: #FF1493; margin-top: 20px;"></p>
+        <button id="afterHangmanBtn" style="display: none;" onclick="nextSlide(22)">Next 💌</button>
+    </div>
+
+    <!-- Slide 22: Cute Characters -->
+    <div class="slide" id="slide22">
+        <h1 style="color: #FF69B4;">🌸 Cute Characters 🌸</h1>
+        <p style="font-size: 16px; margin: 20px;">These Tiny friends wants <br> to tell you something 💕</p>
+        <h1 id="characterDisplay">🐻 🐰 🐶 🐱 🧸</h1>
+        <button onclick="characterSurprise()">Tap for a Surprise 💝</button>
+        <button id="afterCharacterBtn" style="display: none;" onclick="nextSlide(23)">Next 🎨</button>
+    </div>
+
+    <!-- Slide 23: Drawing Game -->
+    <div class="slide" id="slide23">
+        <h2 style="color: #FF1493;">Draw a heart for me! ❤️</h2>
+        <canvas id="drawCanvas" width="550" height="350" class="canvas-area"></canvas>
+        <button onclick="clearCanvas()">Clear ✨</button>
+        <button onclick="nextSlide(24)">Done 💕 Next Slide ➜</button>
+    </div>
+
+    <!-- Slide 24: Mystery Box -->
+    <div class="slide" id="slide24">
+        <h2>Open Carefully 🎁</h2>
+        <button onclick="openMysteryBox()">Open Box 🎁</button>
+        <p id="mysteryMsg" style="font-weight: bold; font-size: 18px; margin-top: 20px;"></p>
+        <button id="afterMysteryBtn" style="display: none;" onclick="nextSlide(25)">Next ➜ 💌</button>
+    </div>
+
+    <!-- Slide 25: Surprise Reveal -->
+    <div class="slide" id="slide25">
+        <h2>One last thing…</h2>
+        <p id="revealMsg" style="font-size: 20px; font-weight: bold; color: #FF1493; margin: 20px;"></p>
+        <div id="revealButtons" style="display: none;">
+            <button id="yesBtn" onclick="sayYes()">YES 💖</button>
+            <button onclick="sayNo()">NO 🙈</button>
+        </div>
+        <button id="revealQuestionBtn" onclick="revealQuestion()">Click Me 💌</button>
+    </div>
+
+    <!-- Slide 26: Heartbeat -->
+    <div class="slide" id="slide26">
+        <h1 id="beatingHeart" style="font-size: 80px; color: red;">❤️</h1>
+        <h2 style="color: #FF1493; margin-top: 30px;">I LOVE YOU HONEY 💖</h2>
+        <button onclick="nextSlide(27)" style="margin-top: 40px;">END 💕</button>
+    </div>
+
+    <!-- Slide 27: Final Message -->
+    <div class="slide" id="slide27">
+        <h1 style="font-size: 32px; text-align: center; line-height: 1.8;">
+            🤍 No matter where life takes us<br>
+            my heart will always find <br>
+            its way back to you 🤍
+        </h1>
+        <button onclick="location.reload()">Start Again 💌</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        let playerName = '';
+        let cutieName = '';
+        
+        // Quiz data
+        const quiz1 = [
+            {q: "Nickname?", a: "zizar"},
+            {q: "Anniversary date?", a: "050225"},
+            {q: "Favorite color?", a: "black"}
+        ];
+        let quiz1Index = 0;
+        
+        const quiz2 = [
+            {q: "Favorite human?", a: "itz you bibi"},
+            {q: "Favorite food?", a: "your cutie brainn"},
+            {q: "Favorite animal?", a: "itz you againnn!"}
+        ];
+        let quiz2Index = 0;
+        
+        // Memory game
+        let memoryCards = [];
+        let firstCard = null;
+        let secondCard = null;
+        let matchCount = 0;
+        let lockBoard = false;
+        
+        // Hangman
+        const hangmanWord = "LOVEYOU";
+        let hangmanGuessed = [];
+        let hangmanAttempts = 0;
+        
+        // Other game states
+        let kissCount = 0;
+        let unlockProgress = 0;
+        let handsStep = 0;
+        let reactionCount = 0;
+        let mysteryClicks = 0;
+        let yesBtnSize = 16;
+        
+        function nextSlide(n) {
+            document.getElementById('slide' + currentSlide).classList.remove('active');
+            currentSlide = n;
+            document.getElementById('slide' + currentSlide).classList.add('active');
+            
+            // Initialize specific slides
+            if (n === 0) initStartPage();
+            if (n === 1) createFloatingElements();
+            if (n === 5) setupCutieNameInput();
+            if (n === 6) startCutenessMeter();
+            if (n === 10) startHeartsAnimation();
+            if (n === 11) startHeartQuest();
+            if (n === 12) startQuiz1();
+            if (n === 13) startQuiz2();
+            if (n === 14) startMemoryGame();
+            if (n === 17) startFindHeart();
+            if (n === 21) startHangman();
+            if (n === 23) initDrawing();
+            if (n === 26) startHeartbeat();
+        }
+        
+        // Start Page Animation
+        function initStartPage() {
+            const canvas = document.getElementById('startCanvas');
+            const ctx = canvas.getContext('2d');
+            const hearts = [];
+            const colors = ['#FF69B4', '#FF1493', '#FFC0CB', '#FFD1DC'];
+            
+            for (let i = 0; i < 40; i++) {
+                hearts.push({
+                    x: Math.random() * 600,
+                    y: Math.random() * 400,
+                    speed: Math.random() * 2 + 1,
+                    size: Math.random() * 10 + 15,
+                    color: colors[Math.floor(Math.random() * colors.length)]
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, 600, 400);
+                
+                // Draw title
+                ctx.font = 'bold 28px Arial';
+                ctx.fillStyle = '#FF1493';
+                ctx.textAlign = 'center';
+                ctx.fillText('💖 Anniversary Surprise 💖', 300, 100);
+                
+                // Draw hearts
+                hearts.forEach(heart => {
+                    ctx.font = heart.size + 'px Arial';
+                    ctx.fillStyle = heart.color;
+                    ctx.fillText('💗', heart.x, heart.y);
+                    
+                    heart.y += heart.speed;
+                    if (heart.y > 400) {
+                        heart.y = -20;
+                        heart.x = Math.random() * 600;
+                    }
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        
+        function createFloatingElements() {
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const emoji = document.createElement('div');
+                    emoji.className = 'emoji-rain';
+                    emoji.textContent = ['💗', '💕', '💖', '💘'][Math.floor(Math.random() * 4)];
+                    emoji.style.left = Math.random() * 100 + '%';
+                    emoji.style.fontSize = (Math.random() * 20 + 15) + 'px';
+                    emoji.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    document.body.appendChild(emoji);
+                    
+                    setTimeout(() => emoji.remove(), 5000);
+                }, i * 200);
+            }
+        }
+        
+        // Login
+        function checkLogin() {
+            const name = document.getElementById('nameInput').value.trim();
+            const password = document.getElementById('passwordInput').value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            
+            if (!name) {
+                errorMsg.textContent = 'Please enter your name 💗';
+                return;
+            }
+            
+            if (password !== '050225') {
+                errorMsg.textContent = 'Wrong password 😢';
+                return;
+            }
+            
+            playerName = name;
+            document.querySelectorAll('#userName, #questName, #teaseName, #letterName, #letterName2').forEach(el => {
+                el.textContent = name;
+            });
+            
+            nextSlide(3);
+        }
+        
+        // Fake Breakup
+        function breakUp() {
+            document.getElementById('choiceResult').textContent = 'Access denied. Nice try tho 😌';
+            document.getElementById('choiceResult').style.color = 'red';
+        }
+        
+        function stayTogether() {
+            document.getElementById('choiceResult').textContent = "Correct answer. You're stuck with me 😘";
+            document.getElementById('choiceResult').style.color = 'green';
+            document.getElementById('nextAfterChoice').style.display = 'inline-block';
+        }
+        
+        // Cutie Name Input
+        function setupCutieNameInput() {
+            const input = document.getElementById('cutieNameInput');
+            const btn = document.getElementById('cutenessBtn');
+            
+            input.addEventListener('input', () => {
+                btn.style.display = input.value.length > 3 ? 'inline-block' : 'none';
+            });
+        }
+        
+        // Cuteness Meter
+        function startCutenessMeter() {
+            cutieName = document.getElementById('cutieNameInput').value;
+            document.getElementById('cutieName').textContent = cutieName;
+            document.getElementById('scaleNameDisplay').textContent = cutieName;
+            
+            let percent = 0;
+            const progressFill = document.getElementById('progressFill');
+            const percentDisplay = document.getElementById('percentDisplay');
+            const statusText = document.getElementById('statusText');
+            
+            const interval = setInterval(() => {
+                if (percent < 100) {
+                    percent += 5;
+                    progressFill.style.width = percent + '%';
+                    percentDisplay.textContent = percent + '%';
+                } else {
+                    clearInterval(interval);
+                    setTimeout(() => {
+                        percentDisplay.textContent = '∞';
+                        percentDisplay.style.fontSize = '48px';
+                        statusText.textContent = 'ERROR 💥 Scale Broken!';
+                        
+                        setTimeout(() => {
+                            percentDisplay.textContent = '💥 CUTENESS OVERLOAD 💥';
+                            percentDisplay.style.fontSize = '24px';
+                            statusText.textContent = 'Maximum limit exceeded 💗';
+                            document.getElementById('afterCutenessBtn').style.display = 'inline-block';
+                            createFireworks();
+                        }, 1000);
+                    }, 500);
+                }
+            }, 150);
+        }
+        
+        function createFireworks() {
+            for (let i = 0; i < 30; i++) {
+                setTimeout(() => {
+                    const colors = ['#FF69B4', '#FF1493', '#FFC0CB', '#FFD700', '#FF4500'];
+                    const x = Math.random() * window.innerWidth;
+                    const y = Math.random() * window.innerHeight;
+                    
+                    for (let j = 0; j < 20; j++) {
+                        const firework = document.createElement('div');
+                        firework.className = 'firework';
+                        firework.style.left = x + 'px';
+                        firework.style.top = y + 'px';
+                        firework.style.background = colors[Math.floor(Math.random() * colors.length)];
+                        firework.style.setProperty('--x', (Math.random() - 0.5) * 200 + 'px');
+                        firework.style.setProperty('--y', (Math.random() - 0.5) * 200 + 'px');
+                        document.body.appendChild(firework);
+                        
+                        setTimeout(() => firework.remove(), 1000);
+                    }
+                }, i * 100);
+            }
+        }
+        
+        // Love Letter
+        function openLetter() {
+            document.getElementById('letterContent').style.display = 'block';
+            document.getElementById('openLetterBtn').style.display = 'none';
+            setTimeout(() => {
+                document.getElementById('afterLetterBtn').style.display = 'inline-block';
+            }, 3000);
+        }
+        
+        // Animated Hearts Canvas
+        function startHeartsAnimation() {
+            const canvas = document.getElementById('heartsCanvas');
+            const ctx = canvas.getContext('2d');
+            const hearts = [];
+            
+            for (let i = 0; i < 20; i++) {
+                hearts.push({
+                    x: Math.random() * 480,
+                    y: Math.random() * 400,
+                    speed: Math.random() * 2 + 1
+                });
+            }
+            
+            function animate() {
+                ctx.clearRect(0, 0, 480, 400);
+                
+                hearts.forEach(heart => {
+                    ctx.font = '30px Arial';
+                    ctx.fillText('❤️', heart.x, heart.y);
+                    
+                    heart.y += heart.speed;
+                    if (heart.y > 400) {
+                        heart.y = 0;
+                        heart.x = Math.random() * 480;
+                    }
+                });
+                
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+        
+        // Heart Quest
+        let heartQuestHearts = [];
+        let collectedHearts = 0;
+        
+        function startHeartQuest() {
+            const canvas = document.getElementById('heartQuestCanvas');
+            const ctx = canvas.getContext('2d');
+            heartQuestHearts = [];
+            collectedHearts = 0;
+            
+            for (let i = 0; i < 10; i++) {
+                heartQuestHearts.push({
+                    x: Math.random() * 440 + 20,
+                    y: Math.random() * 310 + 20,
+                    collected: false
+                });
+            }
+            
+            function draw() {
+                ctx.clearRect(0, 0, 480, 350);
+                heartQuestHearts.forEach(heart => {
+                    if (!heart.collected) {
+                        ctx.font = '30px Arial';
+                        ctx.fillText('❤️', heart.x, heart.y);
+                    }
+                });
+            }
+            
+            canvas.onclick = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                heartQuestHearts.forEach(heart => {
+                    if (!heart.collected && Math.abs(x - heart.x) < 20 && Math.abs(y - heart.y) < 20) {
+                        heart.collected = true;
+                        collectedHearts++;
+                        document.getElementById('heartScore').textContent = collectedHearts + ' / 10 ❤️';
+                        
+                        if (collectedHearts < 10) {
+                            document.getElementById('collectMsg').textContent = 'whaaa you are collecting my heart ❤️';
+                        } else {
+                            document.getElementById('collectMsg').textContent = 'Yay!! You collected all my hearts ❤️';
+                            document.getElementById('afterHeartsBtn').style.display = 'inline-block';
+                            createFireworks();
+                        }
+                        draw();
+                    }
+                });
+            };
+            
+            draw();
+        }
+        
+        // Quiz 1
+        function startQuiz1() {
+            quiz1Index = 0;
+            document.getElementById('quiz1Question').textContent = quiz1[0].q;
+            document.getElementById('quiz1Answer').value = '';
+            document.getElementById('quiz1Feedback').textContent = '';
+        }
+        
+        function checkQuiz1() {
+            const answer = document.getElementById('quiz1Answer').value.trim().toLowerCase();
+            const feedback = document.getElementById('quiz1Feedback');
+            
+            if (answer === quiz1[quiz1Index].a.toLowerCase()) {
+                feedback.textContent = 'Correct ✅';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = `Oops ❌, correct: ${quiz1[quiz1Index].a}`;
+                feedback.style.color = 'red';
+            }
+            
+            document.getElementById('quiz1Answer').value = '';
+            quiz1Index++;
+            
+            if (quiz1Index < quiz1.length) {
+                setTimeout(() => {
+                    document.getElementById('quiz1Question').textContent = quiz1[quiz1Index].q;
+                    feedback.textContent = '';
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextQuiz1Btn').style.display = 'inline-block';
+                }, 1000);
+            }
+        }
+        
+        // Quiz 2
+        function startQuiz2() {
+            quiz2Index = 0;
+            document.getElementById('quiz2Question').textContent = quiz2[0].q;
+            document.getElementById('quiz2Answer').value = '';
+            document.getElementById('quiz2Feedback').textContent = '';
+        }
+        
+        function checkQuiz2() {
+            const answer = document.getElementById('quiz2Answer').value.trim().toLowerCase();
+            const feedback = document.getElementById('quiz2Feedback');
+            
+            if (answer === quiz2[quiz2Index].a.toLowerCase()) {
+                feedback.textContent = 'Correct ✅';
+                feedback.style.color = 'green';
+            } else {
+                feedback.textContent = `Oops ❌, correct: ${quiz2[quiz2Index].a}`;
+                feedback.style.color = 'red';
+            }
+            
+            document.getElementById('quiz2Answer').value = '';
+            quiz2Index++;
+            
+            if (quiz2Index < quiz2.length) {
+                setTimeout(() => {
+                    document.getElementById('quiz2Question').textContent = quiz2[quiz2Index].q;
+                    feedback.textContent = '';
+                }, 1500);
+            } else {
+                setTimeout(() => {
+                    document.getElementById('nextQuiz2Btn').style.display = 'inline-block';
+                }, 1000);
+            }
+        }
+        
+        // Memory Game
+        function startMemoryGame() {
+            const emojis = ['❤️', '💖', '💘', '💕', '❤️', '💖', '💘', '💕'];
+            emojis.sort(() => Math.random() - 0.5);
+            
+            const grid = document.getElementById('memoryGrid');
+            grid.innerHTML = '';
+            memoryCards = [];
+            matchCount = 0;
+            firstCard = null;
+            secondCard = null;
+            lockBoard = false;
+            
+            // Create 3x3 grid with center decorative
+            for (let i = 0; i < 9; i++) {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                if (i === 4) {
+                    // Center decorative card
+                    card.textContent = '💗';
+                    card.style.cursor = 'default';
+                    card.style.background = 'linear-gradient(135deg, #FFB6C1, #FF69B4)';
+                } else {
+                    const emojiIndex = i < 4 ? i : i - 1;
+                    card.textContent = '❓';
+                    card.dataset.emoji = emojis[emojiIndex];
+                    card.dataset.index = emojiIndex;
+                    card.onclick = () => flipCard(card);
+                    memoryCards.push(card);
+                }
+                
+                grid.appendChild(card);
+            }
+        }
+        
+        function flipCard(card) {
+            if (lockBoard || card.textContent !== '❓' || card === firstCard) return;
+            
+            card.textContent = card.dataset.emoji;
+            
+            if (!firstCard) {
+                firstCard = card;
+            } else {
+                secondCard = card;
+                lockBoard = true;
+                
+                setTimeout(() => {
+                    if (firstCard.dataset.emoji === secondCard.dataset.emoji) {
+                        matchCount++;
+                        firstCard.style.background = 'linear-gradient(135deg, #98FB98, #90EE90)';
+                        secondCard.style.background = 'linear-gradient(135deg, #98FB98, #90EE90)';
+                        
+                        if (matchCount === 4) {
+                            document.getElementById('memoryMsg').textContent = 'Yay! You matched all my hearts 💗';
+                            document.getElementById('afterMemoryBtn').style.display = 'inline-block';
+                            createFireworks();
+                        }
+                    } else {
+                        firstCard.textContent = '❓';
+                        secondCard.textContent = '❓';
+                    }
+                    
+                    firstCard = null;
+                    secondCard = null;
+                    lockBoard = false;
+                }, 800);
+            }
+        }
+        
+        // Kiss Collector
+        function collectKiss() {
+            kissCount++;
+            document.getElementById('kissScore').textContent = kissCount + ' / 20';
+            
+            if (kissCount === 20) {
+                document.getElementById('kissMsg').textContent = 'All kisses are yours hunn!!💋💖';
+                document.getElementById('afterKissBtn').style.display = 'inline-block';
+                createFireworks();
+            }
+        }
+        
+        // I Love You
+        function iLoveYou() {
+            document.getElementById('loveResponse').textContent = 'I knew it 🥰💖';
+            document.getElementById('afterLoveBtn').style.display = 'inline-block';
+            createFireworks();
+        }
+        
+        // Find Heart
+        function startFindHeart() {
+            const grid = document.getElementById('heartFindGrid');
+            grid.innerHTML = '';
+            const correctIndex = Math.floor(Math.random() * 6);
+            
+            for (let i = 0; i < 6; i++) {
+                const heart = document.createElement('button');
+                heart.textContent = '❤️';
+                heart.style.fontSize = '40px';
+                heart.style.background = 'linear-gradient(135deg, #FFE4E1, #FFC0CB)';
+                heart.style.border = 'none';
+                heart.style.cursor = 'pointer';
+                heart.style.padding = '20px';
+                heart.style.borderRadius = '10px';
+                heart.style.transition = 'all 0.3s';
+                heart.onmouseover = () => heart.style.transform = 'scale(1.2)';
+                heart.onmouseout = () => heart.style.transform = 'scale(1)';
+                heart.onclick = () => checkHeart(i === correctIndex);
+                grid.appendChild(heart);
+            }
+        }
+        
+        function checkHeart(isCorrect) {
+            if (isCorrect) {
+                document.getElementById('findHeartMsg').textContent = 'You found my heart 💗';
+                document.getElementById('findHeartMsg').style.color = '#FF1493';
+                document.getElementById('afterFindBtn').style.display = 'inline-block';
+                createFireworks();
+            } else {
+                document.getElementById('findHeartMsg').textContent = 'Not this one sweetheart😅';
+                document.getElementById('findHeartMsg').style.color = '#666';
+            }
+        }
+        
+        // Love Unlock
+        function unlockLove() {
+            unlockProgress++;
+            document.getElementById('unlockBar').textContent = '💗'.repeat(unlockProgress);
+            
+            if (unlockProgress === 10) {
+                document.getElementById('unlockMsg').textContent = 'Unlocked forever 🔓💖';
+                document.getElementById('afterUnlockBtn').style.display = 'inline-block';
+                createFireworks();
+            }
+        }
+        
+        // Hold Hands
+        const handsSteps = ['🤍 🤍', '🤍 🤍 → 💗', '💗 🤍', '💗 💗', '🤝💖'];
+        
+        function holdHands() {
+            if (handsStep < handsSteps.length - 1) {
+                handsStep++;
+                document.getElementById('handsDisplay').textContent = handsSteps[handsStep];
+            } else if (handsStep === handsSteps.length - 1) {
+                document.getElementById('handsMsg').textContent = 'Always together 🥰';
+                document.getElementById('afterHandsBtn').style.display = 'inline-block';
+                createFireworks();
+            }
+        }
+        
+        // Reaction Game
+        function reactionClick() {
+            reactionCount++;
+            document.getElementById('reactionScore').textContent = `Score: ${reactionCount} / 50`;
+            
+            if (reactionCount === 50) {
+                document.getElementById('reactionMsg').textContent = 'So fast! 💓';
+                document.getElementById('afterReactionBtn').style.display = 'inline-block';
+                createFireworks();
+            }
+        }
+        
+        // Hangman
+        function startHangman() {
+            hangmanGuessed = Array(hangmanWord.length).fill('_');
+            hangmanAttempts = 0;
+            updateHangmanDisplay();
+            document.getElementById('hangmanInput').value = '';
+            document.getElementById('hangmanMsg').textContent = '';
+        }
+        
+        function updateHangmanDisplay() {
+            document.getElementById('hangmanDisplay').textContent = hangmanGuessed.join(' ');
+        }
+        
+        function guessLetter() {
+            const input = document.getElementById('hangmanInput');
+            const letter = input.value.toUpperCase();
+            input.value = '';
+            
+            if (!letter) return;
+            
+            let found = false;
+            for (let i = 0; i < hangmanWord.length; i++) {
+                if (hangmanWord[i] === letter) {
+                    hangmanGuessed[i] = letter;
+                    found = true;
+                }
+            }
+            
+            updateHangmanDisplay();
+            hangmanAttempts++;
+            
+            if (!hangmanGuessed.includes('_')) {
+                document.getElementById('hangmanMsg').textContent = 'You guessed it! 💖';
+                document.getElementById('afterHangmanBtn').style.display = 'inline-block';
+                createFireworks();
+            } else if (hangmanAttempts >= 100) {
+                document.getElementById('hangmanMsg').textContent = `You ran out of attempts 😢 The word was ${hangmanWord}`;
+                document.getElementById('afterHangmanBtn').style.display = 'inline-block';
+            }
+        }
+        
+        // Character Surprise
+        function characterSurprise() {
+            document.getElementById('characterDisplay').textContent = '✨ She told us not to tell you, but she is totally into youu!! ✨';
+            document.getElementById('characterDisplay').style.fontSize = '20px';
+            document.getElementById('afterCharacterBtn').style.display = 'inline-block';
+        }
+        
+        // Drawing
+        let isDrawing = false;
+        let drawCanvas, drawCtx;
+        
+        function initDrawing() {
+            drawCanvas = document.getElementById('drawCanvas');
+            drawCtx = drawCanvas.getContext('2d');
+            drawCtx.strokeStyle = '#FF69B4';
+            drawCtx.lineWidth = 3;
+            drawCtx.lineCap = 'round';
+            drawCtx.lineJoin = 'round';
+            
+            drawCanvas.onmousedown = (e) => {
+                isDrawing = true;
+                const rect = drawCanvas.getBoundingClientRect();
+                drawCtx.beginPath();
+                drawCtx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+            };
+            
+            drawCanvas.onmousemove = (e) => {
+                if (!isDrawing) return;
+                const rect = drawCanvas.getBoundingClientRect();
+                drawCtx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+                drawCtx.stroke();
+            };
+            
+            drawCanvas.onmouseup = () => isDrawing = false;
+            drawCanvas.onmouseleave = () => isDrawing = false;
+            
+            // Touch support
+            drawCanvas.ontouchstart = (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                const rect = drawCanvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                drawCtx.beginPath();
+                drawCtx.moveTo(touch.clientX - rect.left, touch.clientY - rect.top);
+            };
+            
+            drawCanvas.ontouchmove = (e) => {
+                e.preventDefault();
+                if (!isDrawing) return;
+                const rect = drawCanvas.getBoundingClientRect();
+                const touch = e.touches[0];
+                drawCtx.lineTo(touch.clientX - rect.left, touch.clientY - rect.top);
+                drawCtx.stroke();
+            };
+            
+            drawCanvas.ontouchend = () => isDrawing = false;
+        }
+        
+        function clearCanvas() {
+            drawCtx.clearRect(0, 0, 550, 350);
+        }
+        
+        // Mystery Box
+        const mysteryMessages = [
+            "Nothing 😏",
+            "Still nothing 😜",
+            "Oops… empty again 🙈",
+            "Why are you smiling? 😌",
+            "Okay okay… last try 👀",
+            "JK IT'S MY LOVE 💖"
+        ];
+        
+        function openMysteryBox() {
+            if (mysteryClicks < mysteryMessages.length) {
+                document.getElementById('mysteryMsg').textContent = mysteryMessages[mysteryClicks];
+                mysteryClicks++;
+                
+                if (mysteryClicks === mysteryMessages.length) {
+                    document.getElementById('afterMysteryBtn').style.display = 'inline-block';
+                    createFireworks();
+                }
+            }
+        }
+        
+        // Surprise Reveal
+        function revealQuestion() {
+            document.getElementById('revealMsg').textContent = 'Will you stay with me forever? 💖';
+            document.getElementById('revealButtons').style.display = 'block';
+            document.getElementById('revealQuestionBtn').style.display = 'none';
+        }
+        
+        function sayYes() {
+            nextSlide(26);
+            createFireworks();
+        }
+        
+        function sayNo() {
+            document.getElementById('revealMsg').textContent = 'ARE YOU SURE? 😳';
+            yesBtnSize += 4;
+            document.getElementById('yesBtn').style.fontSize = yesBtnSize + 'px';
+        }
+        
+        // Heartbeat
+        function startHeartbeat() {
+            const heart = document.getElementById('beatingHeart');
+            let big = false;
+            
+            setInterval(() => {
+                big = !big;
+                heart.style.fontSize = big ? '100px' : '80px';
+                heart.style.transition = 'font-size 0.3s ease';
+            }, 500);
+            
+            createFireworks();
+        }
+        
+        // Initialize on page load
+        window.onload = () => {
+            initStartPage();
+        };
+    </script>
+</body>
+</html>
+
+
+
+
+
+
