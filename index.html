@@ -216,7 +216,8 @@
     <!-- Slide 0: Start Page -->
     <div class="slide active" id="slide0">
         <canvas id="startCanvas" width="600" height="400"></canvas>
-        <button onclick="nextSlide(1)">Click to Start 💌</button>
+        <button onclick="playMusic(); nextSlide(1)">Click to Start 💌</button>
+
     </div>
 
     <!-- Slide 1: Welcome -->
@@ -471,7 +472,8 @@
             my heart will always find <br>
             its way back to you 🤍
         </h1>
-        <button onclick="location.reload()">Start Again 💌</button>
+        <button onclick="stopMusic(); location.reload()">Start Again 💌</button>
+
     </div>
 
     <script>
@@ -1189,8 +1191,27 @@
             initStartPage();
         };
     </script>
+
+<audio id="bgMusic" loop>
+  <source src="song.mp3.mpeg" type="audio/mpeg">
+</audio>
+
+<script>
+  function playMusic() {
+    document.getElementById("bgMusic").play();
+  }
+
+  function stopMusic() {
+    const music = document.getElementById("bgMusic");
+    music.pause();
+    music.currentTime = 0;
+  }
+</script>
+
+    
 </body>
 </html>
+
 
 
 
