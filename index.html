@@ -213,9 +213,18 @@
     </style>
 </head>
 <body>
-<audio id="bgMusic" preload="auto" loop>
-  <source src="song.mpeg" type="audio/mpeg">
-</audio>
+<audio id="bgMusic" src="song.mp3" loop></audio>
+
+<!-- Play music when clicking "Start" button -->
+<button onclick="startMusicAndSlide()">Click to Start 💌</button>
+
+<script>
+function startMusicAndSlide() {
+    document.getElementById("bgMusic").play(); // play song
+    nextSlide(1); // move to slide 1
+}
+</script>
+
 
     <!-- Slide 0: Start Page -->
     <!-- Slide 0: Start Page -->
@@ -249,7 +258,7 @@
                 because us will always be the key 🔐💞
             </p>
         </div>
-         <button onclick="slide2" style="margin-top: 20px;">Click to Begin 💌</button>
+        <button onclick="slide2" style="margin-top: 20px;">Click to Begin 💌</button>
      </div>
            
 
@@ -1221,6 +1230,7 @@
     
 </body>
 </html>
+
 
 
 
