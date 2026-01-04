@@ -213,6 +213,10 @@
     </style>
 </head>
 <body>
+<audio id="bgMusic" preload="auto" loop>
+  <source src="song.mpeg" type="audio/mpeg">
+</audio>
+
     <!-- Slide 0: Start Page -->
     <div class="slide active" id="slide0">
         <canvas id="startCanvas" width="600" height="400"></canvas>
@@ -1196,31 +1200,22 @@
         };
     </script>
 
-
-    <script>
-function playMusic() {
+<script>
+  function playMusic() {
     const music = document.getElementById("bgMusic");
-    if (music.paused) {
-        music.volume = 0.4;
-        music.play().then(() => {
-            console.log("Music started");
-        }).catch(err => {
-            console.log("Music blocked:", err);
-        });
-    }
-}
+    music.play().catch(err => console.log(err));
+  }
 
-function stopMusic() {
+  function stopMusic() {
     const music = document.getElementById("bgMusic");
     music.pause();
     music.currentTime = 0;
-}
+  }
 </script>
-
-
     
 </body>
 </html>
+
 
 
 
