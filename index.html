@@ -241,9 +241,7 @@
             </p>
         </div>
         <button onclick="nextSlide(2)" style="margin-top: 20px;">Click to Begin 💌</button>
-    </div>        
-
-
+    </div>
 
     <!-- Slide 2: Login -->
     <div class="slide" id="slide2">
@@ -477,7 +475,6 @@
             its way back to you 🤍
         </h1>
         <button onclick="stopMusic(); location.reload()">Start Again 💌</button>
-
     </div>
 
     <script>
@@ -520,13 +517,25 @@
         let mysteryClicks = 0;
         let yesBtnSize = 16;
         
+        // Music and slide start function
+        function startMusicAndSlide() {
+            const music = document.getElementById("bgMusic");
+            music.play().catch(err => console.log("Music playback failed:", err));
+            nextSlide(1);
+        }
+        
+        function stopMusic() {
+            const music = document.getElementById("bgMusic");
+            music.pause();
+            music.currentTime = 0;
+        }
+        
         function nextSlide(n) {
             document.getElementById('slide' + currentSlide).classList.remove('active');
             currentSlide = n;
             document.getElementById('slide' + currentSlide).classList.add('active');
             
             // Initialize specific slides
-            if (n === 0) initStartPage();
             if (n === 1) createFloatingElements();
             if (n === 5) setupCutieNameInput();
             if (n === 6) startCutenessMeter();
@@ -539,50 +548,6 @@
             if (n === 21) startHangman();
             if (n === 23) initDrawing();
             if (n === 26) startHeartbeat();
-        }
-        
-        // Start Page Animation
-        function initStartPage() {
-            const canvas = document.getElementById('startCanvas');
-            const ctx = canvas.getContext('2d');
-            const hearts = [];
-            const colors = ['#FF69B4', '#FF1493', '#FFC0CB', '#FFD1DC'];
-            
-            for (let i = 0; i < 40; i++) {
-                hearts.push({
-                    x: Math.random() * 600,
-                    y: Math.random() * 400,
-                    speed: Math.random() * 2 + 1,
-                    size: Math.random() * 10 + 15,
-                    color: colors[Math.floor(Math.random() * colors.length)]
-                });
-            }
-            
-            function animate() {
-                ctx.clearRect(0, 0, 600, 400);
-                
-                // Draw title
-                ctx.font = 'bold 28px Arial';
-                ctx.fillStyle = '#FF1493';
-                ctx.textAlign = 'center';
-                ctx.fillText('💖 Anniversary Surprise 💖', 300, 100);
-                
-                // Draw hearts
-                hearts.forEach(heart => {
-                    ctx.font = heart.size + 'px Arial';
-                    ctx.fillStyle = heart.color;
-                    ctx.fillText('💗', heart.x, heart.y);
-                    
-                    heart.y += heart.speed;
-                    if (heart.y > 400) {
-                        heart.y = -20;
-                        heart.x = Math.random() * 600;
-                    }
-                });
-                
-                requestAnimationFrame(animate);
-            }
-            animate();
         }
         
         function createFloatingElements() {
@@ -643,7 +608,7 @@
             const btn = document.getElementById('cutenessBtn');
             
             input.addEventListener('input', () => {
-                btn.style.display = input.value.length > 3 ? 'inline-block' : 'none';
+                btn.style.display = input.value.length > 0 ? 'inline-block' : 'none';
             });
         }
         
@@ -884,13 +849,11 @@
             secondCard = null;
             lockBoard = false;
             
-            // Create 3x3 grid with center decorative
             for (let i = 0; i < 9; i++) {
                 const card = document.createElement('div');
                 card.className = 'card';
                 
                 if (i === 4) {
-                    // Center decorative card
                     card.textContent = '💗';
                     card.style.cursor = 'default';
                     card.style.background = 'linear-gradient(135deg, #FFB6C1, #FF69B4)';
@@ -1110,7 +1073,6 @@
             drawCanvas.onmouseup = () => isDrawing = false;
             drawCanvas.onmouseleave = () => isDrawing = false;
             
-            // Touch support
             drawCanvas.ontouchstart = (e) => {
                 e.preventDefault();
                 isDrawing = true;
@@ -1189,46 +1151,6 @@
             
             createFireworks();
         }
-        
-        // Initialize on page load
-        window.onload = () => {
-            initStartPage();
-        };
     </script>
-
-<script>
-  function playMusic() {
-    const music = document.getElementById("bgMusic");
-    music.play().catch(err => console.log(err));
-  }
-
-  function stopMusic() {
-    const music = document.getElementById("bgMusic");
-    music.pause();
-    music.currentTime = 0;
-  }
-</script>
-    
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
