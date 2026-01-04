@@ -1192,25 +1192,32 @@
         };
     </script>
 
-<audio id="bgMusic" loop>
-  <source src="song.mp3.mpeg" type="audio/mpeg">
-</audio>
 
-<script>
-  function playMusic() {
-    document.getElementById("bgMusic").play();
-  }
+    <script>
+function playMusic() {
+    const music = document.getElementById("bgMusic");
+    if (music.paused) {
+        music.volume = 0.4;
+        music.play().then(() => {
+            console.log("Music started");
+        }).catch(err => {
+            console.log("Music blocked:", err);
+        });
+    }
+}
 
-  function stopMusic() {
+function stopMusic() {
     const music = document.getElementById("bgMusic");
     music.pause();
     music.currentTime = 0;
-  }
+}
 </script>
+
 
     
 </body>
 </html>
+
 
 
 
