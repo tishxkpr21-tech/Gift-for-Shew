@@ -520,24 +520,21 @@
         // Music and slide start function
         function startMusicAndSlide() {
     const music = document.getElementById("bgMusic");
+
+    // Try to play music
     music.play()
         .then(() => {
-            console.log("Music playing successfully!");
-            nextSlide(1);
+            console.log("Music started!");
         })
         .catch(err => {
-            console.log("Autoplay blocked, trying again...");
-            // Show a message to user
-            alert("Please click OK to start the music 🎵");
-            music.play()
-                .then(() => nextSlide(1))
-                .catch(e => {
-                    console.error("Music failed:", e);
-                    nextSlide(1); // Continue anyway
-                });
+            // If autoplay blocked, let user know
+            alert("Click OK to start the music 🎵");
+            music.play().catch(e => console.log(e));
         });
-}
 
+    // Go to next slide
+    nextSlide(1);
+}
 
         
         function stopMusic() {
@@ -1170,4 +1167,5 @@
     </script>
 </body>
 </html>
+
 
