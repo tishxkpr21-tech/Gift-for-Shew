@@ -219,7 +219,7 @@
     <!-- Slide 0: Start Page -->
     <div class="slide active" id="slide0">
         <img src="okita.jpeg" alt="Okita" style="max-width: 90%; max-height: 70vh; object-fit: contain; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); margin-bottom: 30px;">
-        <button onclick="startMusicAndSlide()">Click to Start Music & Begin 💌🎵</button>
+        <button onclick="startMusicAndSlide()">Click to Begin 💌🎵</button>
     </div>
 
     <!-- Slide 1: Welcome -->
@@ -521,20 +521,12 @@
         function startMusicAndSlide() {
     const music = document.getElementById("bgMusic");
 
-    // Try to play music
-    music.play()
-        .then(() => {
-            console.log("Music started!");
-        })
-        .catch(err => {
-            // If autoplay blocked, let user know
-            alert("Click OK to start the music 🎵");
-            music.play().catch(e => console.log(e));
-        });
+    music.volume = 0.6;   // optional
+    music.play();         // works because it's triggered by a button click
 
-    // Go to next slide
     nextSlide(1);
 }
+
 
         
         function stopMusic() {
@@ -1167,5 +1159,6 @@
     </script>
 </body>
 </html>
+
 
 
