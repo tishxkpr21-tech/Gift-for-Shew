@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -213,35 +214,16 @@
     </style>
 </head>
 <body>
-<audio id="bgMusic" src="song.mp3" loop></audio>
-
-<!-- Play music when clicking "Start" button -->
-<button onclick="startMusicAndSlide()">Click to Start 💌</button>
-
-<script>
-function startMusicAndSlide() {
-    document.getElementById("bgMusic").play(); // play song
-    nextSlide(1); // move to slide 1
-}
-</script>
-
+    <audio id="bgMusic" src="song.mp3" loop></audio>
 
     <!-- Slide 0: Start Page -->
-    <!-- Slide 0: Start Page -->
-    <div class="slide active" id="slide0" style="display: flex; flex-direction: column; justify-content: center; align-items: center; min-height: 100vh; background: linear-gradient(135deg, #FFE4E1 0%, #FFF0F5 100%);">
-    
-    <!-- Your image -->
-    <img src="okita.jpeg" alt="Okita" style="max-width: 90%; max-height: 70vh; object-fit: contain; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); margin-bottom: 30px;">
-
-    <!-- Start button -->
-    <button onclick="nextSlide(1)">Click to Start 💌</button>
-</div>
-
+    <div class="slide active" id="slide0">
+        <img src="okita.jpeg" alt="Okita" style="max-width: 90%; max-height: 70vh; object-fit: contain; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.2); margin-bottom: 30px;">
+        <button onclick="startMusicAndSlide()">Click to Start 💌</button>
+    </div>
 
     <!-- Slide 1: Welcome -->
-    <!-- Slide 1: Welcome -->
-<div class="slide" id="slide1">
-    <div class="slide-content" style="display: flex; flex-direction: column; align-items: center; justify-content: center;">
+    <div class="slide" id="slide1">
         <div class="message-box">
             <p style="font-size: 14px; font-weight: bold; color: #FF1493; text-align: center;">
                 I made this gift because my heart was overflowing with everything I feel for you 💖✨<br>
@@ -258,9 +240,8 @@ function startMusicAndSlide() {
                 because us will always be the key 🔐💞
             </p>
         </div>
-        <button onclick="slide2" style="margin-top: 20px;">Click to Begin 💌</button>
-     </div>
-           
+        <button onclick="nextSlide(2)" style="margin-top: 20px;">Click to Begin 💌</button>
+    </div>        
 
 
 
@@ -1230,6 +1211,7 @@ function startMusicAndSlide() {
     
 </body>
 </html>
+
 
 
 
